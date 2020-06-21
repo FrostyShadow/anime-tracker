@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:views="clr-namespace:AnimeTracker.Views;assembly=AnimeTracker"
+            x:Class="AnimeTracker.Views.RootTabbedPage"
+            android:TabbedPage.ToolbarPlacement="Bottom">
+    <NavigationPage Title="Home" IconImageSource="baseline_home_black_24">
+        <x:Arguments>
+            <views:HomePage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Anime List" IconImageSource="baseline_tv_black_24">
+        <x:Arguments>
+            <views:AnimeListPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Manga List" IconImageSource="baseline_import_contacts_black_24">
+        <x:Arguments>
+            <views:MangaListPage />
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>
