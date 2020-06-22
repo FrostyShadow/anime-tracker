@@ -1,9 +1,8 @@
-using AnimeTracker.Interfaces;
-using AnimeTracker.Models;
 using Prism;
 using Prism.Ioc;
 using AnimeTracker.ViewModels;
 using AnimeTracker.Views;
+using JikanDotNet;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Forms;
@@ -38,7 +37,7 @@ namespace AnimeTracker
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<AnimeListPage, AnimeListPageViewModel>();
             containerRegistry.RegisterForNavigation<MangaListPage, MangaListPageViewModel>();
-            containerRegistry.RegisterSingleton<IJikanService, JikanService>();
+            containerRegistry.RegisterForNavigation<AnimeMoreInfoPage, AnimeMoreInfoPageViewModel>();
         }
     }
 }
