@@ -5,12 +5,20 @@
              xmlns:models="clr-namespace:AnimeTracker.Models;assembly=AnimeTracker"
              x:Class="AnimeTracker.Views.AnimeListPage"
              Title="{Binding Title}">
-    <ContentPage.Resources>
-        <models:StringToImageConverter x:Key="StringToImageConverter" />
-    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Button Text="Click Me!"
+            <StackLayout Orientation="Horizontal">
+                <Picker ItemsSource="{Binding SeasonsList}"
+                        ItemDisplayBinding="{Binding DisplayName}"
+                        SelectedItem="{Binding SelectedSeason}"
+                        Title="Select season"
+                        SelectedIndex="0"/>
+                <Picker ItemsSource="{Binding YearsList}"
+                        SelectedItem="{Binding SelectedYear}" 
+                        Title="Select year"
+                        SelectedIndex="0"/>
+            </StackLayout>
+            <Button Text="Search"
                     Command="{Binding FetchAnimeListCommand}" />
             <models:ListViewExtended ItemsSource="{Binding AnimeList}"
                       HasUnevenRows="True"

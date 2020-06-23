@@ -3,21 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              x:Class="AnimeTracker.App">
-  <Application.Resources>
+    <Application.Resources>
 
     <!-- Application resource dictionary -->
 
-    <ResourceDictionary>
-        <Style x:Key="ListItemTitle" TargetType="Label">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="DodgerBlue" />
-        </Style>
+        <ResourceDictionary>
 
-        <Style x:Key="ListItemDetails" TargetType="Label">
-            <Setter Property="FontSize" Value="12" />
-        </Style>
-    </ResourceDictionary>
+            <Style x:Key="ListItem" TargetType="Grid">
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+            <Style x:Key="ListItemTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="DodgerBlue" />
+            </Style>
+
+            <Style x:Key="ListItemDetails" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+
+
+            <Style x:Key="OverviewHeader" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="LightGray" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
+            <Style x:Key="OverviewTitle" TargetType="Label">
+                <Setter Property="FontSize" Value="16" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="DodgerBlue" />
+            </Style>
+
+            <Style x:Key="OverviewContent" TargetType="ScrollView">
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+            <Style x:Key="OverviewContentTitle" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="16" />
+            </Style>
+
+            <Style x:Key="OverviewInfoValue" TargetType="Label">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="DodgerBlue" />
+            </Style>
+        </ResourceDictionary>
 
     </Application.Resources>
 </prism:PrismApplication>

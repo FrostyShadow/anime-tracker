@@ -1,0 +1,12 @@
+TODO:
+    ✔ Implement MVVM @done(20-06-23 21:16)
+    ✔ Add API calls @done(20-06-23 21:16)
+    ☐ Download current MAL progress
+    MangaView:
+        ☐ Add list of manga by season
+        ☐ Add manga overview
+        ☐ Add subscibing to manga news
+    AnimeView:
+        ✔ Add list of manga by season @done(20-06-23 21:16)
+        ☐ Add manga overview @started(20-06-23 18:00)
+        ☐ Add subscibing to manga news
