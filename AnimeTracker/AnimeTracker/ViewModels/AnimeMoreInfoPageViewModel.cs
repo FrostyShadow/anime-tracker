@@ -3,7 +3,9 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using JikanDotNet;
+using Prism.Logging;
 using Prism.Navigation;
 
 namespace AnimeTracker.ViewModels
@@ -14,15 +16,29 @@ namespace AnimeTracker.ViewModels
         private readonly IJikan _jikan;
 
         private string _titleEnglish;
-        private string _imageURL;
+        private string _imageUrl;
         private int? _year;
         private string _type;
-        private string _episodes;
+        private string _episodesString;
         private string _rank;
 
         private string _synopsis;
+        private ICollection<CharacterEntry> _characters;
+
         private string _titleRomaji;
         private string _titleJapanese;
+        private string _synonymString;
+
+        private string _episodes;
+        private string _duration;
+        private string _source;
+        private string _status;
+        private DateTime? _startDate;
+        private DateTime? _endDate;
+        private string _season;
+
+        private string _studiosString;
+        private string _producersString;
 
         public string TitleEnglish
         {
@@ -30,10 +46,10 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _titleEnglish, value);
         }
 
-        public string ImageURL
+        public string ImageUrl
         {
-            get => _imageURL;
-            set => SetProperty(ref _imageURL, value);
+            get => _imageUrl;
+            set => SetProperty(ref _imageUrl, value);
         }
 
         public int? Year
@@ -48,10 +64,10 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _type, value);
         }
 
-        public string Episodes
+        public string EpisodesString
         {
-            get => _episodes;
-            set => SetProperty(ref _episodes, value);
+            get => _episodesString;
+            set => SetProperty(ref _episodesString, value);
         }
 
         public string Rank
@@ -66,6 +82,12 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _synopsis, value);
         }
 
+        public ICollection<CharacterEntry> Characters
+        {
+            get => _characters;
+            set => SetProperty(ref _characters, value);
+        }
+
         public string TitleRomaji
         {
             get => _titleRomaji;
@@ -76,6 +98,66 @@ namespace AnimeTracker.ViewModels
         {
             get => _titleJapanese;
             set => SetProperty(ref _titleJapanese, value);
+        }
+
+        public string SynonymString
+        {
+            get => _synonymString;
+            set => SetProperty(ref _synonymString, value);
+        }
+
+        public string Episodes
+        {
+            get => _episodes;
+            set => SetProperty(ref _episodes, value);
+        }
+
+        public string Duration
+        {
+            get => _duration;
+            set => SetProperty(ref _duration, value);
+        }
+
+        public string Source
+        {
+            get => _source;
+            set => SetProperty(ref _source, value);
+        }
+
+        public string Status
+        {
+            get => _status;
+            set => SetProperty(ref _status, value);
+        }
+
+        public DateTime? StartDate
+        {
+            get => _startDate;
+            set => SetProperty(ref _startDate, value);
+        }
+
+        public DateTime? EndDate
+        {
+            get => _endDate;
+            set => SetProperty(ref _endDate, value);
+        }
+
+        public string Season
+        {
+            get => _season;
+            set => SetProperty(ref _season, value);
+        }
+
+        public string StudiosString
+        {
+            get => _studiosString;
+            set => SetProperty(ref _studiosString, value);
+        }
+
+        public string ProducersString
+        {
+            get => _producersString;
+            set => SetProperty(ref _producersString, value);
         }
 
         public AnimeMoreInfoPageViewModel(INavigationService navigationService) : base(navigationService)
@@ -93,18 +175,48 @@ namespace AnimeTracker.ViewModels
         private async void GetAnimeMoreInfoAsync()
         {
             var anime = await _jikan.GetAnime(_malId);
+            var characters = await _jikan.GetAnimeCharactersStaff(_malId);
+            var stringBuilder = new StringBuilder();
 
             TitleRomaji = anime.Title;
             TitleEnglish = anime.TitleEnglish;
             TitleJapanese = anime.TitleJapanese;
+            foreach (var synonym in anime.TitleSynonyms)
+            {
+                stringBuilder.AppendLine(synonym);
+            }
+            SynonymString = stringBuilder.ToString();
             Year = anime.Aired.From.GetValueOrDefault().Year;
-            ImageURL = anime.ImageURL;
+            ImageUrl = anime.ImageURL;
             Type = anime.Type;
-            Episodes = $"{anime.Episodes} Episodes";
+            EpisodesString = $"{anime.Episodes} Episodes";
             Rank = $"Rank #{anime.Rank}";
             Synopsis = anime.Synopsis;
-            
-            
+            Characters = characters.Characters;
+
+            Episodes = anime.Episodes;
+            Duration = anime.Duration;
+            Source = anime.Source;
+            Status = anime.Status;
+            StartDate = anime.Aired.From;
+            EndDate = anime.Aired.To;
+            Season = anime.Premiered;
+
+            stringBuilder.Clear();
+            foreach (var studio in anime.Studios)
+            {
+                stringBuilder.AppendLine(studio.Name);
+            }
+
+            StudiosString = stringBuilder.ToString();
+            stringBuilder.Clear();
+            foreach (var producer in anime.Producers)
+            {
+                stringBuilder.AppendLine(producer.Name);
+            }
+
+            ProducersString = stringBuilder.ToString();
+
         }
     }
 }

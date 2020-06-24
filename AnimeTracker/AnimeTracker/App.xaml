@@ -50,6 +50,12 @@
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="TextColor" Value="DodgerBlue" />
             </Style>
+
+            <Style x:Key="ContentSeparator" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="1" />
+                <Setter Property="BackgroundColor" Value="Black" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            </Style>
         </ResourceDictionary>
 
     </Application.Resources>

@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:AnimeTracker.Models;assembly=AnimeTracker"
+             xmlns:customControls="clr-namespace:AnimeTracker.Views.CustomControls;assembly=AnimeTracker"
+             x:Class="AnimeTracker.Views.SearchPage"
+             Title="{Binding Title}">
+    <StackLayout>
+        <SearchBar x:Name="SearchBar"
+                   Placeholder="Search anime..."
+                   SearchCommand="{Binding SearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}"/>
+        <models:ListViewExtended ItemsSource="{Binding ResultsList}"
+                                 HasUnevenRows="True"
+                                 SeparatorColor="DodgerBlue"
+                                 ItemClickCommand="{Binding GoToDetailsCommand}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <customControls:JikanListItem ItemTitle="{Binding Title}"
+                                                  ItemImage="{Binding ImageURL}"
+                                                  ItemScore="{Binding Score}"
+                                                  ItemYear="{Binding StartDate, StringFormat='{}{0:yyyy}'}"
+                                                  ItemType="{Binding Type}">
+                    </customControls:JikanListItem>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </models:ListViewExtended>
+    </StackLayout>
+</ContentPage>

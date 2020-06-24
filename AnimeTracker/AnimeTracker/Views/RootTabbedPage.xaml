@@ -15,9 +15,14 @@
             <views:AnimeListPage />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Manga List" IconImageSource="baseline_import_contacts_black_24">
+    <NavigationPage Title="Search" IconImageSource="baseline_search_black_24">
         <x:Arguments>
-            <views:MangaListPage />
+            <views:SearchPage />
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="My Anime List" IconImageSource="baseline_account_box_black_24">
+        <x:Arguments>
+            <views:HomePage />
         </x:Arguments>
     </NavigationPage>
 </TabbedPage>

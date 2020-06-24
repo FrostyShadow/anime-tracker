@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customControls="clr-namespace:AnimeTracker.Views.CustomControls;assembly=AnimeTracker"
              mc:Ignorable="d"
              x:Class="AnimeTracker.Views.AnimeMoreInfoPage"
              Title="Anime overview">
@@ -21,7 +22,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Image Grid.Column="0"
-                       Source="{Binding ImageURL}" />
+                       Source="{Binding ImageUrl}" />
 
                 <StackLayout Grid.Column="1"
                              Orientation="Vertical">
@@ -31,7 +32,7 @@
                     <StackLayout Orientation="Horizontal">
                         <Label Text="{Binding Type}" />
                         <Label Text="&#8901;" />
-                        <Label Text="{Binding Episodes}" />
+                        <Label Text="{Binding EpisodesString}" />
                     </StackLayout>
                     <Label Text="{Binding Rank}" />
                 </StackLayout>
@@ -45,18 +46,43 @@
                        Style="{StaticResource OverviewContentTitle}"/>
                 <Label Text="{Binding Synopsis}"/>
 
+                <Label Text="Characters"
+                       Style="{StaticResource OverviewContentTitle}" />
+                <CollectionView ItemsSource="{Binding Characters}"
+                                ItemsLayout="HorizontalList"
+                                HeightRequest="150">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                
+                                <Image Grid.Row="0"
+                                       Margin="5"
+                                       Source="{Binding ImageURL}"
+                                       Aspect="AspectFit"/>
+
+                                <Label Grid.Row="1"
+                                       Text="{Binding Name}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
                 <Label Text="Info"
                        Style="{StaticResource OverviewContentTitle}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width=".35*" />
+                        <ColumnDefinition Width=".5*" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Label Grid.Row="0"
@@ -81,6 +107,122 @@
                     <Label Grid.Row="2"
                            Grid.Column="1"
                            Text="{Binding TitleJapanese}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Text="Synonyms" />
+                    <Label Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding SynonymString}"
+                           Style="{StaticResource OverviewInfoValue}" />
+                </Grid>
+                <BoxView Style="{StaticResource ContentSeparator}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".5*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Format" />
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding Type}"
+                           Style="{StaticResource OverviewInfoValue}"/>
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Episodes" />
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Episodes}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="2"
+                           Grid.Column="0"
+                           Text="Episode Duration" />
+                    <Label Grid.Row="2"
+                           Grid.Column="1"
+                           Text="{Binding Duration}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="3"
+                           Grid.Column="0"
+                           Text="Source" />
+                    <Label Grid.Row="3"
+                           Grid.Column="1"
+                           Text="{Binding Source}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="4"
+                           Grid.Column="0"
+                           Text="Status" />
+                    <Label Grid.Row="4"
+                           Grid.Column="1"
+                           Text="{Binding Status}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="5"
+                           Grid.Column="0"
+                           Text="Start Date" />
+                    <Label Grid.Row="5"
+                           Grid.Column="1"
+                           Text="{Binding StartDate, StringFormat='{}{0:dd MMM yyyy}'}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="6"
+                           Grid.Column="0"
+                           Text="End Date" />
+                    <Label Grid.Row="6"
+                           Grid.Column="1"
+                           Text="{Binding EndDate, StringFormat='{}{0:dd MMM yyyy}'}"
+                           Style="{StaticResource OverviewInfoValue}" />
+
+                    <Label Grid.Row="7"
+                           Grid.Column="0"
+                           Text="Season" />
+                    <Label Grid.Row="7"
+                           Grid.Column="1"
+                           Text="{Binding Season}"
+                           Style="{StaticResource OverviewInfoValue}" />
+                </Grid>
+                <BoxView Style="{StaticResource ContentSeparator}" />
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width=".5*" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Studios" />
+                    <Label Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding StudiosString}"
+                           Style="{StaticResource OverviewInfoValue}"/>
+
+                    <Label Grid.Row="1"
+                           Grid.Column="0"
+                           Text="Producers" />
+                    <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding ProducersString}"
                            Style="{StaticResource OverviewInfoValue}" />
                 </Grid>
             </StackLayout>

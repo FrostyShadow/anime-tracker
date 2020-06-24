@@ -36,7 +36,7 @@ namespace AnimeTracker
             containerRegistry.RegisterForNavigation<RootTabbedPage, RootTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<AnimeListPage, AnimeListPageViewModel>();
-            containerRegistry.RegisterForNavigation<MangaListPage, MangaListPageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<AnimeMoreInfoPage, AnimeMoreInfoPageViewModel>();
         }
     }

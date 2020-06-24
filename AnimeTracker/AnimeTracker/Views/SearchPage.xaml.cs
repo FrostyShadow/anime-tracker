@@ -2,9 +2,9 @@
 
 namespace AnimeTracker.Views
 {
-    public partial class MangaListPage : ContentPage
+    public partial class SearchPage : ContentPage
     {
-        public MangaListPage()
+        public SearchPage()
         {
             InitializeComponent();
         }
