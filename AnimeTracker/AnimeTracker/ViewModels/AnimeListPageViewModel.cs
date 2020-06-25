@@ -27,6 +27,8 @@ namespace AnimeTracker.ViewModels
         private int _selectedYear;
         private SeasonItem _selectedSeason;
 
+        private bool _isDownloading;
+
         public ICollection<AnimeSubEntry> AnimeList
         {
             get => _animeList;
@@ -57,9 +59,15 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _selectedSeason, value);
         }
 
-        public AnimeListPageViewModel(INavigationService navigationService, IPageDialogService dialogService) : base(navigationService)
+        public bool IsDownloading
         {
-            _jikan = new Jikan(true);
+            get => _isDownloading;
+            set => SetProperty(ref _isDownloading, value);
+        }
+
+        public AnimeListPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IJikan jikan) : base(navigationService)
+        {
+            _jikan = jikan;
             _dialogService = dialogService;
             FetchAnimeListCommand = new DelegateCommand<object>(FetchAnimeList);
             GoToDetailsCommand = new DelegateCommand<object>(GoToDetails);
@@ -102,8 +110,7 @@ namespace AnimeTracker.ViewModels
         private async void GoToDetails(object parameter)
         {
             var animeSubEntry = (AnimeSubEntry) parameter;
-            var navigationParams = new NavigationParameters();
-            navigationParams.Add("malId", animeSubEntry.MalId);
+            var navigationParams = new NavigationParameters {{"malId", animeSubEntry.MalId}};
             await NavigationService.NavigateAsync("AnimeMoreInfoPage", navigationParams);
         }
 
@@ -148,13 +155,17 @@ namespace AnimeTracker.ViewModels
                 await _dialogService.DisplayAlertAsync("Info", "Select search parameters first!", "OK");
                 return;
             }
+
+            AnimeList = null;
             await GetAnimeListBySeasonAsync(SelectedYear, SelectedSeason.Seasons);
         }
 
         private async Task GetAnimeListBySeasonAsync(int year, Seasons seasons)
         {
+            IsDownloading = true;
             var season = await _jikan.GetSeason(year, seasons);
             AnimeList = season.SeasonEntries;
+            IsDownloading = false;
         }
     }
 }

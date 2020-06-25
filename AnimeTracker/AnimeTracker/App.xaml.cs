@@ -1,3 +1,7 @@
+using System;
+using System.IO;
+using AnimeTracker.Interfaces;
+using AnimeTracker.Models;
 using Prism;
 using Prism.Ioc;
 using AnimeTracker.ViewModels;
@@ -32,12 +36,17 @@ namespace AnimeTracker
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+            containerRegistry.RegisterInstance<IDatabaseHelper>(new DatabaseHelper(
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "AnimeTracker.db")));
+            containerRegistry.RegisterInstance<IJikan>(new Jikan(true));
 
             containerRegistry.RegisterForNavigation<RootTabbedPage, RootTabbedPageViewModel>();
-            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<AnimeListPage, AnimeListPageViewModel>();
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<AnimeMoreInfoPage, AnimeMoreInfoPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyAnimeListPage, MyAnimeListPageViewModel>();
+            containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>();
         }
     }
 }

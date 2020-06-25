@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace AnimeTracker.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HomePage : ContentPage
+    public partial class MyAnimeListPage : ContentPage
     {
-        public HomePage()
+        public MyAnimeListPage()
         {
             InitializeComponent();
         }

@@ -160,9 +160,9 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _producersString, value);
         }
 
-        public AnimeMoreInfoPageViewModel(INavigationService navigationService) : base(navigationService)
+        public AnimeMoreInfoPageViewModel(INavigationService navigationService, IJikan jikan) : base(navigationService)
         {
-            _jikan = new Jikan(true);
+            _jikan = jikan;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)

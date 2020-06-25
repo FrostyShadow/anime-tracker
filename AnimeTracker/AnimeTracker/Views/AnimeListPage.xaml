@@ -6,35 +6,40 @@
              x:Class="AnimeTracker.Views.AnimeListPage"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Picker ItemsSource="{Binding SeasonsList}"
-                        ItemDisplayBinding="{Binding DisplayName}"
-                        SelectedItem="{Binding SelectedSeason}"
-                        Title="Select season"
-                        SelectedIndex="0"/>
-                <Picker ItemsSource="{Binding YearsList}"
-                        SelectedItem="{Binding SelectedYear}" 
-                        Title="Select year"
-                        SelectedIndex="0"/>
+        <Grid>
+            <ActivityIndicator IsRunning="{Binding IsDownloading}" Color="DodgerBlue" />
+            <StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Picker ItemsSource="{Binding SeasonsList}"
+                            ItemDisplayBinding="{Binding DisplayName}"
+                            SelectedItem="{Binding SelectedSeason}"
+                            Title="Select season"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndex="0"/>
+                    <Picker ItemsSource="{Binding YearsList}"
+                            SelectedItem="{Binding SelectedYear}" 
+                            Title="Select year"
+                            HorizontalOptions="FillAndExpand"
+                            SelectedIndex="0"/>
+                </StackLayout>
+                <Button Text="Search"
+                        Command="{Binding FetchAnimeListCommand}" />
+                <models:ListViewExtended ItemsSource="{Binding AnimeList}"
+                                         HasUnevenRows="True"
+                                         SeparatorColor="DodgerBlue"
+                                         ItemClickCommand="{Binding GoToDetailsCommand}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <customControls:JikanListItem ItemTitle="{Binding Title}"
+                                                          ItemImage="{Binding ImageURL}"
+                                                          ItemScore="{Binding Score}"
+                                                          ItemYear="{Binding AiringStart, StringFormat='{}{0:yyyy}'}"
+                                                          ItemType="{Binding Type}">
+                            </customControls:JikanListItem>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </models:ListViewExtended>
             </StackLayout>
-            <Button Text="Search"
-                    Command="{Binding FetchAnimeListCommand}" />
-            <models:ListViewExtended ItemsSource="{Binding AnimeList}"
-                      HasUnevenRows="True"
-                      SeparatorColor="DodgerBlue"
-                      ItemClickCommand="{Binding GoToDetailsCommand}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <customControls:JikanListItem ItemTitle="{Binding Title}"
-                                                      ItemImage="{Binding ImageURL}"
-                                                      ItemScore="{Binding Score}"
-                                                      ItemYear="{Binding AiringStart, StringFormat='{}{0:yyyy}'}"
-                                                      ItemType="{Binding Type}">
-                        </customControls:JikanListItem>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </models:ListViewExtended>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

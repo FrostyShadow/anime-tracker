@@ -27,9 +27,9 @@ namespace AnimeTracker.ViewModels
             set => SetProperty(ref _resultsList, value);
         }
 
-        public SearchPageViewModel(INavigationService navigationService, IPageDialogService dialogService) : base(navigationService)
+        public SearchPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IJikan jikan) : base(navigationService)
         {
-            _jikan = new Jikan(true);
+            _jikan = jikan;
             _dialogService = dialogService;
             SearchCommand = new DelegateCommand<object>(Search);
             GoToDetailsCommand = new DelegateCommand<object>(GoToDetails);
