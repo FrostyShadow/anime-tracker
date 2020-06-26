@@ -15,7 +15,7 @@
             <views:SearchPage />
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="My Anime" IconImageSource="baseline_account_box_black_24">
+    <NavigationPage Title="My List" IconImageSource="baseline_account_box_black_24">
         <x:Arguments>
             <views:MyAnimeListPage />
         </x:Arguments>

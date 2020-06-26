@@ -162,10 +162,18 @@ namespace AnimeTracker.ViewModels
 
         private async Task GetAnimeListBySeasonAsync(int year, Seasons seasons)
         {
-            IsDownloading = true;
-            var season = await _jikan.GetSeason(year, seasons);
-            AnimeList = season.SeasonEntries;
-            IsDownloading = false;
+            try
+            {
+                IsDownloading = true;
+                var season = await _jikan.GetSeason(year, seasons);
+                AnimeList = season.SeasonEntries;
+                IsDownloading = false;
+            }
+            catch (Exception ex)
+            {
+                await _dialogService.DisplayAlertAsync("Error", "Problem while sending the request", "OK");
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

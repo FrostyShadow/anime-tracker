@@ -163,6 +163,7 @@ namespace AnimeTracker.ViewModels
         public AnimeMoreInfoPageViewModel(INavigationService navigationService, IJikan jikan) : base(navigationService)
         {
             _jikan = jikan;
+            Title = "Anime overview";
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -174,48 +175,55 @@ namespace AnimeTracker.ViewModels
         //TODO: Add expandable synopsis
         private async void GetAnimeMoreInfoAsync()
         {
-            var anime = await _jikan.GetAnime(_malId);
-            var characters = await _jikan.GetAnimeCharactersStaff(_malId);
-            var stringBuilder = new StringBuilder();
-
-            TitleRomaji = anime.Title;
-            TitleEnglish = anime.TitleEnglish;
-            TitleJapanese = anime.TitleJapanese;
-            foreach (var synonym in anime.TitleSynonyms)
+            try
             {
-                stringBuilder.AppendLine(synonym);
+                var anime = await _jikan.GetAnime(_malId);
+                var characters = await _jikan.GetAnimeCharactersStaff(_malId);
+                var stringBuilder = new StringBuilder();
+
+                TitleRomaji = anime.Title;
+                TitleEnglish = anime.TitleEnglish;
+                TitleJapanese = anime.TitleJapanese;
+                foreach (var synonym in anime.TitleSynonyms)
+                {
+                    stringBuilder.AppendLine(synonym);
+                }
+                SynonymString = stringBuilder.ToString();
+                Year = anime.Aired.From.GetValueOrDefault().Year;
+                ImageUrl = anime.ImageURL;
+                Type = anime.Type;
+                EpisodesString = $"{anime.Episodes} Episodes";
+                Rank = $"Rank #{anime.Rank}";
+                Synopsis = anime.Synopsis;
+                Characters = characters.Characters;
+
+                Episodes = anime.Episodes;
+                Duration = anime.Duration;
+                Source = anime.Source;
+                Status = anime.Status;
+                StartDate = anime.Aired.From;
+                EndDate = anime.Aired.To;
+                Season = anime.Premiered;
+
+                stringBuilder.Clear();
+                foreach (var studio in anime.Studios)
+                {
+                    stringBuilder.AppendLine(studio.Name);
+                }
+
+                StudiosString = stringBuilder.ToString();
+                stringBuilder.Clear();
+                foreach (var producer in anime.Producers)
+                {
+                    stringBuilder.AppendLine(producer.Name);
+                }
+
+                ProducersString = stringBuilder.ToString();
             }
-            SynonymString = stringBuilder.ToString();
-            Year = anime.Aired.From.GetValueOrDefault().Year;
-            ImageUrl = anime.ImageURL;
-            Type = anime.Type;
-            EpisodesString = $"{anime.Episodes} Episodes";
-            Rank = $"Rank #{anime.Rank}";
-            Synopsis = anime.Synopsis;
-            Characters = characters.Characters;
-
-            Episodes = anime.Episodes;
-            Duration = anime.Duration;
-            Source = anime.Source;
-            Status = anime.Status;
-            StartDate = anime.Aired.From;
-            EndDate = anime.Aired.To;
-            Season = anime.Premiered;
-
-            stringBuilder.Clear();
-            foreach (var studio in anime.Studios)
+            catch (Exception ex)
             {
-                stringBuilder.AppendLine(studio.Name);
+                Console.WriteLine(ex.Message);
             }
-
-            StudiosString = stringBuilder.ToString();
-            stringBuilder.Clear();
-            foreach (var producer in anime.Producers)
-            {
-                stringBuilder.AppendLine(producer.Name);
-            }
-
-            ProducersString = stringBuilder.ToString();
 
         }
     }

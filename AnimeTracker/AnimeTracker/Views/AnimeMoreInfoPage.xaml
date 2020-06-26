@@ -6,7 +6,7 @@
              xmlns:customControls="clr-namespace:AnimeTracker.Views.CustomControls;assembly=AnimeTracker"
              mc:Ignorable="d"
              x:Class="AnimeTracker.Views.AnimeMoreInfoPage"
-             Title="Anime overview">
+             Title="{Binding Title}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height=".45*" />

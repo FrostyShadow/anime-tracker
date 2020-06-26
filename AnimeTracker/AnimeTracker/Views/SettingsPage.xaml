@@ -5,12 +5,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="AnimeTracker.Views.SettingsPage"
-             Title="Settings">
+             Title="{Binding Title}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="5">
+            <Entry Placeholder="Enter MAL username"
+                   Text="{Binding UserName}"
+                   HorizontalOptions="FillAndExpand"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="Last update: " 
+                       HorizontalOptions="Start"/>
+                <Label Text="{Binding LastUpdateDate}"
+                       HorizontalOptions="FillAndExpand" />
+            </StackLayout>
+            <Button Text="Update My List"
+                    Command="{Binding UpdateMyListCommand}" />
+            <StackLayout Orientation="Horizontal">
+                <CheckBox IsChecked="{Binding IsAutoUpdateEnabled}"
+                          Color="DodgerBlue"/>
+                <Label Text="Enable My List auto update"
+                       VerticalOptions="Center"/>
+            </StackLayout>
+            <ActivityIndicator Color="DodgerBlue"
+                               IsRunning="{Binding IsListUpdating}" 
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

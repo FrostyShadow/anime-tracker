@@ -38,7 +38,7 @@ namespace AnimeTracker.Models
                 new UserConfigEntity
                 {
                     Key = "IsAutomaticListUpdateEnabled",
-                    Value = "0"
+                    Value = bool.FalseString
                 }
             };
             await _database.RunInTransactionAsync(db =>
@@ -58,12 +58,13 @@ namespace AnimeTracker.Models
 
         public async Task SaveUserListAsync(IList<AnimeListEntry> animeListEntries, bool isCleanRequired = false)
         {
-            var entity = animeListEntries.Select(animeListEntry => new AnimeListEntity(animeListEntry)).ToList();
+            var entities = animeListEntries.Select(animeListEntry => new AnimeListEntity(animeListEntry)).ToList();
             await _database.RunInTransactionAsync(db =>
             {
                 if (isCleanRequired)
                     db.Table<AnimeListEntity>().Delete();
-                db.InsertOrReplace(entity);
+                foreach(var entity in entities)
+                    db.InsertOrReplace(entity);
             });
         }
 

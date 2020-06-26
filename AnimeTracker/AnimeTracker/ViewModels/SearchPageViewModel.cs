@@ -29,6 +29,7 @@ namespace AnimeTracker.ViewModels
 
         public SearchPageViewModel(INavigationService navigationService, IPageDialogService dialogService, IJikan jikan) : base(navigationService)
         {
+            Title = "Search";
             _jikan = jikan;
             _dialogService = dialogService;
             SearchCommand = new DelegateCommand<object>(Search);
@@ -44,22 +45,29 @@ namespace AnimeTracker.ViewModels
 
         private async void Search(object parameter)
         {
-            ResultsList?.Clear();
-            if (parameter == null)
+            try
             {
-                await _dialogService.DisplayAlertAsync("Info", "Enter search query first!", "OK");
-                return;
-            }
+                ResultsList?.Clear();
+                if (parameter == null)
+                {
+                    await _dialogService.DisplayAlertAsync("Info", "Enter search query first!", "OK");
+                    return;
+                }
 
-            var query = (string) parameter;
-            var results = await _jikan.SearchAnime(query);
-            if (results.Results.Count == 0)
+                var query = (string)parameter;
+                var results = await _jikan.SearchAnime(query);
+                if (results.Results.Count == 0)
+                {
+                    await _dialogService.DisplayAlertAsync("Info", "No results", "OK");
+                    return;
+                }
+
+                ResultsList = results.Results;
+            }
+            catch (Exception ex)
             {
-                await _dialogService.DisplayAlertAsync("Info", "No results", "OK");
-                return;
+                Console.WriteLine(ex.Message);
             }
-
-            ResultsList = results.Results;
         }
     }
 }

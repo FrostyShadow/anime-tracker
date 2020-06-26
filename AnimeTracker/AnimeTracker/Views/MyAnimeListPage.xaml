@@ -3,14 +3,43 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:AnimeTracker.Models;assembly=AnimeTracker"
+             xmlns:customControls="clr-namespace:AnimeTracker.Views.CustomControls;assembly=AnimeTracker"
              mc:Ignorable="d"
              x:Class="AnimeTracker.Views.MyAnimeListPage"
-             Title="My Anime">
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <models:JikanWatchingStatusConverter x:Key="JikanWatchingStatusConverter" />
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Picker ItemsSource="{Binding WatchingStatuses}"
+                    SelectedItem="{Binding WatchingStatus}"
+                    HorizontalOptions="FillAndExpand"
+                    ItemDisplayBinding="{Binding DisplayName}"
+                    Title="Filter list"
+                    SelectedIndex="0"/>
+            <models:ListViewExtended ItemsSource="{Binding MyList}"
+                                     HasUnevenRows="True"
+                                     SeparatorColor="DodgerBlue"
+                                     ItemClickCommand="{Binding GoToDetailsCommand}"
+                                     IsPullToRefreshEnabled="True"
+                                     IsRefreshing="{Binding IsRefreshing}"
+                                     RefreshCommand="{Binding RefreshCommand}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <customControls:MyListItem ItemTitle="{Binding Title}"
+                                                      ItemImage="{Binding ImageURL}"
+                                                      ItemScore="{Binding Score}"
+                                                      ItemYear="{Binding StartDate, StringFormat='{}{0:yyyy}'}"
+                                                      ItemType="{Binding Type}"
+                                                      ItemTotalEpisodes="{Binding TotalEpisodes}"
+                                                      ItemWatchedEpisodes="{Binding WatchedEpisodes}"
+                                                      ItemWatchingStatus="{Binding WatchingStatus, Converter={StaticResource JikanWatchingStatusConverter}}">
+                        </customControls:MyListItem>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </models:ListViewExtended>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="AnimeTracker.Views.CustomControls.MyListItem"
+             x:Name="RootView">
+    <Grid
+        Style="{StaticResource ListItem}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".25*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0"
+               Source="{Binding ItemImage, Source={x:Reference RootView}}"/>
+        <StackLayout Grid.Column="1"
+                     Orientation="Vertical">
+            <Label Text="{Binding ItemTitle, Source={x:Reference RootView}}"
+                   Style="{StaticResource ListItemTitle}"/>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding ItemScore, Source={x:Reference RootView}, StringFormat='Score: {0:f}'}"
+                       Style="{StaticResource ListItemDetails}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding ItemYear, Source={x:Reference RootView}}"
+                       Style="{StaticResource ListItemDetails}"/>
+                <Label Text="-"
+                       Style="{StaticResource ListItemDetails}"/>
+                <Label Text="{Binding ItemType, Source={x:Reference RootView}}"
+                       Style="{StaticResource ListItemDetails}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label Text="{Binding ItemWatchedEpisodes, Source={x:Reference RootView}}"
+                       Style="{StaticResource ListItemDetails}"/>
+                <Label Text="/"
+                       Style="{StaticResource ListItemDetails}"/>
+                <Label Text="{Binding ItemTotalEpisodes, Source={x:Reference RootView}}"
+                       Style="{StaticResource ListItemDetails}"/>
+            </StackLayout>
+            <Label Text="{Binding ItemWatchingStatus, Source={x:Reference RootView}}"
+                       Style="{StaticResource ListItemDetails}" />
+        </StackLayout>
+    </Grid>
+</ViewCell>
